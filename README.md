@@ -2,8 +2,8 @@
 this is a Mobile Movie App built with React js , React Native 
 Looks Like Netflex
 
-![screenshot1](./assets/screenShot1.PNG)
-![screenshot2](./assets/screenShot2.PNG)
+![screenshot1](./assets/ScreenShot1.PNG)
+![screenshot2](./assets/ScreenShot2.PNG)
 
 
 ## Built with
