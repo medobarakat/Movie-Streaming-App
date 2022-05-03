@@ -9,9 +9,10 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   ImageBackground,
+  Animated,
 } from "react-native";
+import { color } from "react-native-reanimated";
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated from "react-native-reanimated";
 import {
   dummyData,
   icons,
@@ -99,7 +100,7 @@ const Home = ({ navigation }) => {
           return (
             <TouchableWithoutFeedback
               onPress={() =>
-                navigation.navigate("MovieDetail", { selectedMovie: Item })
+                navigation.navigate("MovieDetail", { selectedMovie: item })
               }
             >
               <View
@@ -117,7 +118,61 @@ const Home = ({ navigation }) => {
                     height: SIZES.width * 0.85,
                     justifyContent: "flex-end",
                   }}
-                ></ImageBackground>
+                  imageStyle={{
+                    borderRadius: 40,
+                  }}
+                >
+                  <View
+                    style={{
+                      height: 60,
+                      width: "100%",
+                      marginBottom: SIZES.radius,
+                      paddingHorizontal: SIZES.radius,
+                      backgroundColor: COLORS.transparentWhite,
+                    }}
+                  >
+                    {/* playnow */}
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 40,
+                          height: 40,
+                          borderRadius: 20,
+                          backgroundColor: COLORS.transparentWhite,
+                        }}
+                      >
+                        <Image
+                          source={icons.play}
+                          style={{
+                            width: 15,
+                            height: 15,
+                            tintColor: COLORS.white,
+                          }}
+                        />
+                      </View>
+                      <Text
+                        style={{
+                          marginLeft: SIZES.base,
+                          color: COLORS.white,
+                          ...FONTS.h3,
+                        }}
+                      >
+                        PlayNow
+                      </Text>
+                    </View>
+
+                    {/* still watching */}
+                    <View></View>
+                  </View>
+                </ImageBackground>
               </View>
             </TouchableWithoutFeedback>
           );
@@ -139,7 +194,7 @@ const Home = ({ navigation }) => {
       <ScrollView
         horizontal
         style={{
-          paddingBottom: 100,
+          paddingBottom: 250,
         }}
       >
         {renderNewSessionSection()}
