@@ -24,7 +24,7 @@ import {
   FONTS,
 } from "../constants";
 import { newSeason } from "../constants/dummy";
-
+import { Profiles } from "../components";
 const Home = ({ navigation }) => {
   const newSeasonScrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -129,7 +129,8 @@ const Home = ({ navigation }) => {
                       width: "100%",
                       marginBottom: SIZES.radius,
                       paddingHorizontal: SIZES.radius,
-                      backgroundColor: COLORS.transparentWhite,
+                      justifyContent: "space-between",
+                      flexDirection: "row",
                     }}
                   >
                     {/* playnow */}
@@ -146,8 +147,8 @@ const Home = ({ navigation }) => {
                           justifyContent: "center",
                           width: 40,
                           height: 40,
-                          borderRadius: 20,
-                          // backgroundColor: COLORS.transparentWhite,
+                          backgroundColor: COLORS.transparentWhite,
+                          borderRadius: 30,
                         }}
                       >
                         <Image
@@ -171,19 +172,23 @@ const Home = ({ navigation }) => {
                     </View>
 
                     {/* still watching */}
-                    {item.stillWatching.length > 0 && 
-                    <View style={{
-                      justifyContent:"center"
-                    }}>
-                      <Text style={{
-                        color:Colors.white,
-                        ...FONTS.h4
-                      }}>
-                        Still Watching
-                      </Text>
-                      
-                      
-                      </View>}
+                    {item.stillWatching.length > 0 && (
+                      <View
+                        style={{
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: Colors.white,
+                            ...FONTS.h4,
+                          }}
+                        >
+                          Still Watching
+                        </Text>
+                        <Profiles profiles={item.stillWatching} />
+                      </View>
+                    )}
                   </View>
                 </ImageBackground>
               </View>
@@ -191,6 +196,14 @@ const Home = ({ navigation }) => {
           );
         }}
       />
+    );
+  }
+
+  function renderDots() {
+    return (
+      <View>
+        <Text style={{ color: COLORS.primary }}>fuck</Text>
+      </View>
     );
   }
 
@@ -211,6 +224,7 @@ const Home = ({ navigation }) => {
         }}
       >
         {renderNewSessionSection()}
+        {renderDots()}
       </ScrollView>
     </SafeAreaView>
   );
