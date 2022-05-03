@@ -269,7 +269,7 @@ const MovieDetail = ({ navigation, route }) => {
       {/* category&ratings */}
       {renderCategory()}
 
-      {/* moviedetails */}
+      {/* themoviedetails */}
       {renderMovieDetail()}
     </ScrollView>
   );
