@@ -12,6 +12,7 @@ import {
   Animated,
 } from "react-native";
 import { color } from "react-native-reanimated";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import {
   dummyData,
@@ -146,7 +147,7 @@ const Home = ({ navigation }) => {
                           width: 40,
                           height: 40,
                           borderRadius: 20,
-                          backgroundColor: COLORS.transparentWhite,
+                          // backgroundColor: COLORS.transparentWhite,
                         }}
                       >
                         <Image
@@ -170,7 +171,19 @@ const Home = ({ navigation }) => {
                     </View>
 
                     {/* still watching */}
-                    <View></View>
+                    {item.stillWatching.length > 0 && 
+                    <View style={{
+                      justifyContent:"center"
+                    }}>
+                      <Text style={{
+                        color:Colors.white,
+                        ...FONTS.h4
+                      }}>
+                        Still Watching
+                      </Text>
+                      
+                      
+                      </View>}
                   </View>
                 </ImageBackground>
               </View>
