@@ -24,7 +24,7 @@ import {
   FONTS,
 } from "../constants";
 import { newSeason } from "../constants/dummy";
-import { Profiles } from "../components";
+import { Profiles, ProgressBar } from "../components";
 const Home = ({ navigation }) => {
   const newSeasonScrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -200,9 +200,132 @@ const Home = ({ navigation }) => {
   }
 
   function renderDots() {
+    const dotPosition = Animated.divide(newSeasonScrollX, SIZES.width);
+
     return (
-      <View>
-        <Text style={{ color: COLORS.primary }}>fuck</Text>
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {dummyData.newSeason.map((item, index) => {
+          const opacity = dotPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [0.3, 1, 0.3],
+            extrapolate: "clamp",
+          });
+
+          const dotwidth = dotPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [6, 20, 6],
+            extrapolate: "clamp",
+          });
+
+          const dotColor = dotPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [COLORS.lightGray, COLORS.primary, COLORS.lightGray],
+            extrapolate: "clamp",
+          });
+          return (
+            <Animated.View
+              opacity={opacity}
+              key={`dot-${index}`}
+              style={{
+                borderRadius: SIZES.radius,
+                marginHorizontal: 3,
+                width: dotwidth,
+                height: 6,
+                backgroundColor: dotColor,
+              }}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+
+  function renderContinueWatchingSection() {
+    return (
+      <View style={{ marginTop: SIZES.padding }}>
+        {/* header */}
+        <View
+          style={{
+            flexDirection: "row",
+            paddingHorizontal: SIZES.padding,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ flex: 1, color: COLORS.white, ...FONTS.h2 }}>
+            Continue Watching
+          </Text>
+          <Image
+            source={icons.right_arrow}
+            style={{ height: 20, tintColor: COLORS.primary, width: 10 }}
+          />
+        </View>
+        {/* list */}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: SIZES.padding,
+          }}
+          data={dummyData.continueWatching}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  navigation.navigate("MovieDetail", { selectedMovie: item })
+                }
+              >
+                <View
+                  style={{
+                    marginLeft: index == 0 ? SIZES.padding : 20,
+                    marginRight:
+                      index == dummyData.continueWatching.length - 1
+                        ? SIZES.padding
+                        : 0,
+                  }}
+                >
+                  {/* thumbnail */}
+                  <Image
+                    source={item.thumbnail}
+                    resizeMode="cover"
+                    style={{
+                      width: SIZES.width / 3,
+                      height: SIZES.width / 3 + 60,
+                      borderRadius: 20,
+                    }}
+                  />
+                  {/* name */}
+                  <Text
+                    style={{
+                      color: COLORS.white,
+                      marginTop: SIZES.base,
+                      ...FONTS.h4,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                  {/* progressbar */}
+                  <ProgressBar
+                    containerStyle={{
+                      marginTops: SIZES.radius,
+                    }}
+                    barStyle={{
+                      height: 3,
+                    }}
+                    barPercentage={item.overallProgress}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            );
+          }}
+        />
       </View>
     );
   }
@@ -218,13 +341,13 @@ const Home = ({ navigation }) => {
       {renderHeader()}
       {/* start of content */}
       <ScrollView
-        horizontal
-        style={{
+        contentContainerStyle={{
           paddingBottom: 250,
         }}
       >
         {renderNewSessionSection()}
         {renderDots()}
+        {renderContinueWatchingSection()}
       </ScrollView>
     </SafeAreaView>
   );

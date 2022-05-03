@@ -1,3 +1,5 @@
 import TabIcon from "./TabIcon";
 import Profiles from "./Profiles";
-export { TabIcon, Profiles };
+import ProgressBar from "./ProgressBar";
+
+export { TabIcon, Profiles, ProgressBar };
